@@ -7,7 +7,7 @@ class StageContextProvider extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            stages: [{task: 'do something'}],
+            stages: [{name: 'do something'}],
         };
         
     }
