@@ -15,12 +15,15 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import StageTable from './components/StageTable';
 import StageContextProvider from './contexts/StageContext';
+import { CssBaseline } from '@material-ui/core';
 
 class App extends Component {
     render() {
         return (
             <StageContextProvider>
+                <CssBaseline>
                 <StageTable></StageTable>
+                </CssBaseline>
             </StageContextProvider>
         );
     }
