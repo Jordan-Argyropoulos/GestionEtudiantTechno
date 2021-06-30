@@ -1,65 +1,91 @@
 import React, { Component, createContext } from 'react';
+import axios from 'axios';
 
 export const StageContext = createContext();
 
-class StageContextProvider extends Component {
-
+class StageContextProvider extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stages: [
-                {id: 1, name: 'do something'},
-                {id: 2, name: 'do something'},
-                {id: 3, name: 'do something'},
-                {id: 4, name: 'do something'},
-                {id: 5, name: 'do something'},
-            ],
+            stages: [],
+            message: {},
         };
-        
+        this.readStage();
     }
 
     //create
     createStage(event, stage) {
         event.preventDefault();
-        let data = [...this.state.stages];
-        data.push(stage);
-        this.setState( {
-            stages: data,
+        axios.post('/api/stage/create', stage)
+            .then(response => {
+                if (response.data.message.level === 'success') {
+                    let data = [...this.state.stages];
+                    data.push(response.data.stage);
+                    this.setState( {
+                        stages: data,
+                        message: response.data.message,
+                    });
+                } else {
+                    this.setState( {
+                        message: response.data.message,
+                    });
+                }
+
+        }).catch(error => {
+            console.error(error);
         })
     }
 
     //read
     readStage() {
+        axios.get('/api/stage/read')
+            .then(response => {
+                this.setState( {
+                    stages: response.data,
+                });
+            }).catch(error => {
+                console.error(error);
+            })
 
     }
 
     //update
     updateStage(data) {
-        let stages = [...this.state.stages];
-        let stage = stages.find(stage => {
-            return stage.id === data.id;
-        })
+        axios.put('/api/stage/update/' + data.id, data)
+            .then(response => {
+                let stages = [...this.state.stages];
+                let stage = stages.find(stage => {
+                    return stage.id === data.id;
+                });
 
-        stage.name = data.name;
+                stage.name = data.name;
 
-        this.setState( {
-            stages: stages,
+                this.setState( {
+                    stages: stages,
+                });
+            }).catch(error => {
+                console.error(error);
         })
     }
     
     //delete
     deleteStage(data) {
-        let stages = [...this.state.stages];
-        let stage = stages.find(stage => {
-            return stage.id === data.id;
-        });
+        axios.delete('/api/stage/delete/' + data.id)
+            .then(response => {
+                //message
+                let stages = [...this.state.stages];
+                let stage = stages.find(stage => {
+                    return stage.id === data.id;
+                });
 
-        stages.splice(stages.indexOf(stage), 1);
+                stages.splice(stages.indexOf(stage), 1);
 
-        this.setState( {
-            stages: stages,
-        });
-
+                this.setState( {
+                    stages: stage,
+                });
+            }).catch(error => {
+                console.error(error);
+            });
     }
 
 
@@ -71,6 +97,7 @@ class StageContextProvider extends Component {
                 createStage: this.createStage.bind(this),
                 updateStage: this.updateStage.bind(this),
                 deleteStage: this.deleteStage.bind(this),
+                setMessage: (message) => this.setState({message: message}),
 
             }}>
                 {this.props.children}

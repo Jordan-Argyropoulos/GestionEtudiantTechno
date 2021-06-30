@@ -22,23 +22,24 @@ function StageTable() {
                     context.createStage(event, {name: addStage})}}>
                 <Table>
                     <TableHead>
-                        <TableRow>
-                            <TableCell>Entreprise</TableCell>
-                            <TableCell>Adresse</TableCell>
-                            <TableCell>Catégorie</TableCell>
+                        <TableRow>                      
+                            <TableCell>Numéro</TableCell>
+                            <TableCell>Descriptif</TableCell>
+                            <TableCell>Date début</TableCell>
+                            <TableCell>Date fin</TableCell>
                             <TableCell align="right">Edit</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                             <TableRow>
                                 <TableCell>
-                                    <TextField value={addStage} onChange={() => {setAddStage(event.target.value)}} id="standard-basic" label="ajouter nom entreprise"/>
+                                    <TextField value={addStage} onChange={() => {setAddStage(event.target.value)}} id="standard-basic" label="ajouter descriptif du stage"/>
                                 </TableCell>
                                 <TableCell>
-                                    <TextField id="standard-basic" label="ajouter adresse entreprise"/>
+                                    <TextField id="standard-basic" label="ajouter une date de début"/>
                                 </TableCell>
                                 <TableCell>
-                                    <TextField id="standard-basic" label="numéro Categorie"/>
+                                    <TextField id="standard-basic" label="ajouter une date de fin"/>
                                 </TableCell>
                                 <TableCell align="right">
                                     <IconButton type="submit">
@@ -47,9 +48,8 @@ function StageTable() {
                                 </TableCell>
                             </TableRow>
                             {context.stages.slice().reverse().map((stage, index) => (
-                            <TableRow key={'stage' + index}>
+                            <TableRow key={'stage ' + index}>
                                 <TableCell>
-
                                     {editIsShown === stage.id ?
                                         <TextField 
                                             value={editStage} 
@@ -73,8 +73,7 @@ function StageTable() {
 
 
                                 </TableCell>          
-                                <TableCell>{stage.name}</TableCell>          
-                                <TableCell>{stage.name}</TableCell>          
+                                <TableCell>{stage.name}</TableCell> 
                                 <TableCell align="right">
 
                                 <IconButton onClick={() => {setEditIsShown(stage.id); setEditStage(stage.name)}}>

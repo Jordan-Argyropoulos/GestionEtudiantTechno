@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Name;
 
 /**
  * Stage
@@ -62,5 +63,13 @@ class Stage
      */
     private $idEntreprise;
 
+    public function toArray()
+    {
+        return ['Id_Stage' => $this->idStage, 'Descriptif' => $this->descriptif, 'Date_debut' => $this->dateDebut, 'Date_fin' => $this->dateFin];
+    }
+    public function setName($name)
+    {
+        $this->name = '';
+    }
 
 }

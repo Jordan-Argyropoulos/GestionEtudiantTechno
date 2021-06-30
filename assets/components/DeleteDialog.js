@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 import React, { Component, useContext } from 'react';
 import { StageContext } from '../contexts/StageContext';
 
@@ -20,7 +20,7 @@ function DeleteDialog(props) {
                     <Button onClick={hide}>Cancel</Button>
                     <Button onClick={() => {
                         context.deleteStage({id: props.stage.id, name: props.stage.name});
-                        hide()
+                        hide();
                         }}>
                         Delete
                     </Button>
@@ -29,9 +29,9 @@ function DeleteDialog(props) {
         );
 }
 
-DeleteDialog.PropTypes = {
-    open: PropTypes.bool.isRequired,
-    setDeleteConfirmationIsShown: PropTypes.func.isRequired,
-    stage: PropTypes.object,
+DeleteDialog.propTypes = {
+    open: propTypes.bool.isRequired,
+    setDeleteConfirmationIsShown: propTypes.func.isRequired,
+    stage: propTypes.object,
 };
 export default DeleteDialog;

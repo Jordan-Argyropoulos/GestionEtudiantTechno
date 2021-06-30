@@ -16,13 +16,15 @@ import ReactDOM from 'react-dom';
 import StageTable from './components/StageTable';
 import StageContextProvider from './contexts/StageContext';
 import { CssBaseline } from '@material-ui/core';
+import AppSnackBar from './components/AppSnackBar';
 
 class App extends Component {
     render() {
         return (
             <StageContextProvider>
                 <CssBaseline>
-                <StageTable></StageTable>
+                <StageTable/>
+                <AppSnackBar/>
                 </CssBaseline>
             </StageContextProvider>
         );
